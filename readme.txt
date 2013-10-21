@@ -15,7 +15,7 @@ Defer loading javascript for WordPress. Without any additional library.
 
 Defer loading javascript for WordPress. Without any additional library. Just the way Google [ask you to do it](https://developers.google.com/speed/docs/insights/BlockingJS).
 
-Handles any javascript enqueued wp_enqueue_scripts.
+Handles any javascript enqueued by wp_enqueue_scripts().
 
 
 Contribute!

@@ -196,22 +196,7 @@ if(class_exists('WP_Defer_Loading'))
 	register_deactivation_hook(__FILE__, array('WP_Defer_Loading', 'deactivate')); 
 	
 	$wpdeferloading = new WP_Defer_Loading();
-	// Add a link to the settings page onto the plugin page 
-	if(isset($wpdeferloading))
-	{
-		
-		 function wp_deferloading_plugin_settings_link($links) 
-		 { 
-			 $settings_link = '<a href="options-general.php?page=wp-deferloading">Settings</a>';
-			 array_unshift($links, $settings_link); 
-			
-			 return $links; 
-		 } 	
-		 $plugin = plugin_basename(__FILE__); 
-		 	
-		
-		 add_filter("plugin_action_links_$plugin", 'wp_deferloading_plugin_settings_link'); 
-	}
+	
 	
 }
 
