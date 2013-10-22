@@ -84,11 +84,9 @@ class WP_Scripts2 extends WP_Scripts
 		else
 		{
 						
-			//echo "var element = document.createElement(\"script\");\n";
-			//echo "element.src = \"".$src."\";\n";
-			//echo "document.body.appendChild(element);\n";
-			//if($handle=="jquery-core") $handle = "jquery";
 			if($handle=="jquery-migrate") $this->registered[$handle]->deps[] = "jquery";
+			if($handle=="bp-legacy-js") $this->registered[$handle]->deps[] = "jquery-cookie";
+			
 			if(count($this->registered[$handle]->deps)===0)$thescriptsnd[($handle=="jquery-core")?'jquery':str_replace('-','_',$handle)]=$src;
 			else $thescripts[$this->registered[$handle]->deps[count($this->registered[$handle]->deps)-1]][str_replace('-','_',$handle)]=$src;
 		
@@ -165,8 +163,26 @@ function init()
 	add_action('wp_head', 'defer_loading_code',99);
 	//add_action( 'defer_loading_scripts','wp_print_head_scripts',1);
 	add_action( 'defer_loading_scripts','wp_print_footer_scripts',2);
-
 	
+	
+
+    if ( in_array( 'buddypress/bp-loader.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) 
+	{
+		remove_action( 'wp_head',    'bp_core_confirmation_js', 100 );
+	}
+    function rc()
+    {
+	/*if ( in_array( 'bbpress/bbpress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) 
+	{
+		global $BBP_Default;
+		remove_action( 'bbp_head',              array( $BBP_Default, 'head_scripts'          ) );
+		//remove_action( 'bbp_head',              array( '&amp;BBP_Default', 'head_scripts'          ) );
+
+    }*/
+    }
+    
+    add_action('wp_head','rc',11);
+    
 	function adddom ($handle,$src)
 	{
 		global $thescripts;
@@ -204,7 +220,9 @@ function init()
 
 			 // Add a script element as a child of the body
 			 function downloadJSAtOnload() {
-			 <?php do_action('defer_loading_scripts'); 
+			 <?php 
+			 do_action('defer_loading_scripts'); 
+
 			 global $thescriptsnd,$thescripts;
 			 
 			 foreach ($thescriptsnd as $handle=>$src)
