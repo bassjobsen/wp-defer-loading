@@ -33,6 +33,8 @@ class WP_Scripts2 extends WP_Scripts
 		if ( !WP_Dependencies::do_item($handle) )
 			return false;
    
+   
+      
 		/*if ( 0 === $group && $this->groups[$handle] > 0 ) {
 			$this->in_footer[] = $handle;
 			return false;
@@ -48,6 +50,8 @@ class WP_Scripts2 extends WP_Scripts
 
 		if ( isset($this->args[$handle]) )
 			$ver = $ver ? $ver . '&amp;' . $this->args[$handle] : $this->args[$handle];
+
+
 
 		$src = $this->registered[$handle]->src;
 
@@ -73,15 +77,21 @@ class WP_Scripts2 extends WP_Scripts
 			$src = add_query_arg('ver', $ver, $src);
 
 		$src = esc_url( apply_filters( 'script_loader_src', $src, $handle ) );
-
+		global $thescripts, $thescriptsnd;
+		
 		if ( $this->do_concat )
 			$this->print_html .= "<script type='text/javascript' src='$src'></script>\n";
 		else
 		{
-			echo "var element = document.createElement(\"script\");\n";
-			echo "element.src = \"".$src."\";\n";
-			echo "document.body.appendChild(element);\n";
-			
+						
+			//echo "var element = document.createElement(\"script\");\n";
+			//echo "element.src = \"".$src."\";\n";
+			//echo "document.body.appendChild(element);\n";
+			//if($handle=="jquery-core") $handle = "jquery";
+			if($handle=="jquery-migrate") $this->registered[$handle]->deps[] = "jquery";
+			if(count($this->registered[$handle]->deps)===0)$thescriptsnd[($handle=="jquery-core")?'jquery':str_replace('-','_',$handle)]=$src;
+			else $thescripts[$this->registered[$handle]->deps[count($this->registered[$handle]->deps)-1]][str_replace('-','_',$handle)]=$src;
+		
         } 
 		return true;
 	}
@@ -106,7 +116,8 @@ class WP_Scripts2 extends WP_Scripts
 	global $wp_scripts;
 	$wp_scripts = new WP_Scripts2();
 
-
+$thescripts = array();
+$thescriptsnd = array();
 if(!class_exists('WP_Defer_Loading')) 
 { 
 	
@@ -152,10 +163,37 @@ function init()
 	remove_action( 'wp_head','wp_print_head_scripts',9);
 	remove_action( 'wp_footer','wp_print_footer_scripts',20);
 	add_action('wp_head', 'defer_loading_code',99);
-	add_action( 'defer_loading_scripts','wp_print_head_scripts',1);
-	//add_action( 'defer_loading_scripts','wp_print_footer_scripts',2);
-	
+	//add_action( 'defer_loading_scripts','wp_print_head_scripts',1);
+	add_action( 'defer_loading_scripts','wp_print_footer_scripts',2);
 
+	
+	function adddom ($handle,$src)
+	{
+		global $thescripts;
+		
+		echo "var element".$handle." = document.createElement(\"script\");\n";
+		
+		if(!empty($thescripts[$handle]))
+		{
+			echo "\n\nfunction helper".$handle."(){\n";
+			
+			foreach($thescripts[$handle] as $handle2=>$src2)
+			{
+			adddom($handle2,$src2);
+			}
+			echo "}\n";
+			
+			echo "element".$handle.".onreadystatechange = function () {\n";
+            echo "if (this.readyState == 'complete') helper".$handle."();\n";
+            echo "}\n";
+            echo "element".$handle.".onload = helper".$handle.";\n\n\n";
+			
+		}	
+
+		echo "element".$handle.".src = \"".$src."\";\n";
+		echo "document.body.appendChild(element".$handle.");\n";
+	
+	}	
 	
 	function defer_loading_code()
 	{
@@ -166,12 +204,14 @@ function init()
 
 			 // Add a script element as a child of the body
 			 function downloadJSAtOnload() {
-					 
 			 <?php do_action('defer_loading_scripts'); 
+			 global $thescriptsnd,$thescripts;
 			 
-			 //global $wp_scripts;
-			 //$wp_scripts->do_head_items();
-			 //var_dump($wp_scripts);
+			 foreach ($thescriptsnd as $handle=>$src)
+			 { 
+				  adddom($handle,$src);
+			 }	 
+			
 			 
 			 ?>
 			 }
