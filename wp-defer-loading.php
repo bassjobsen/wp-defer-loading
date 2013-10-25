@@ -110,12 +110,18 @@ class WP_Scripts2 extends WP_Scripts
 	}
 	
 }	
-	
-	global $wp_scripts;
-	$wp_scripts = new WP_Scripts2();
+
+$page = !is_admin() && !in_array($GLOBALS['pagenow'], array('wp-login.php'));
+if($page)
+{
+
+global $wp_scripts;
+$wp_scripts = new WP_Scripts2();
 
 $thescripts = array();
 $thescriptsnd = array();
+
+
 if(!class_exists('WP_Defer_Loading')) 
 { 
 	
@@ -156,31 +162,17 @@ public static function deactivate()
 
 function init()
 {
-	
+
 	remove_action( 'wp_head','wp_print_head_scripts',9);
 	remove_action( 'wp_footer','wp_print_footer_scripts',20);
 	add_action('wp_head', 'defer_loading_code',99);
-	//add_action( 'defer_loading_scripts','wp_print_head_scripts',1);
-	add_action( 'defer_loading_scripts','wp_print_footer_scripts',2);
-	
-	
+	add_action( 'defer_loading_scripts','wp_print_head_scripts',1);
 
     if ( in_array( 'buddypress/bp-loader.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) 
 	{
 		remove_action( 'wp_head',    'bp_core_confirmation_js', 100 );
 	}
-    function rc()
-    {
-	/*if ( in_array( 'bbpress/bbpress.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) 
-	{
-		global $BBP_Default;
-		remove_action( 'bbp_head',              array( $BBP_Default, 'head_scripts'          ) );
-		//remove_action( 'bbp_head',              array( '&amp;BBP_Default', 'head_scripts'          ) );
 
-    }*/
-    }
-    
-    add_action('wp_head','rc',11);
     
 	function adddom ($handle,$src)
 	{
@@ -246,7 +238,8 @@ function init()
 	
 }
 }	
-
+}
+}
 if(class_exists('WP_Defer_Loading')) 
 { // Installation and uninstallation hooks 
 	register_activation_hook(__FILE__, array('WP_Defer_Loading', 'activate')); 
@@ -255,6 +248,4 @@ if(class_exists('WP_Defer_Loading'))
 	$wpdeferloading = new WP_Defer_Loading();
 	
 	
-}
-
 }
