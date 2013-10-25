@@ -85,7 +85,7 @@ class WP_Scripts2 extends WP_Scripts
 		{
 						
 			if($handle=="jquery-migrate") $this->registered[$handle]->deps[] = "jquery";
-			if($handle=="bp-legacy-js") $this->registered[$handle]->deps[] = "jquery-cookie";
+			if($handle=="bp-legacy-js") $this->registered[$handle]->src = plugins_url( 'buddypress/buddypress.js' , __FILE__ );
 			
 			if(count($this->registered[$handle]->deps)===0)$thescriptsnd[($handle=="jquery-core")?'jquery':str_replace('-','_',$handle)]=$src;
 			else $thescripts[$this->registered[$handle]->deps[count($this->registered[$handle]->deps)-1]][str_replace('-','_',$handle)]=$src;
@@ -126,7 +126,6 @@ class WP_Defer_Loading
 */ 
 public function __construct() 
 { 
-	
 	add_filter( 'init', array( $this, 'init' ) );
 } 
 // END public 
