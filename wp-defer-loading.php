@@ -3,7 +3,7 @@
 Plugin Name: WP Defer Loading
 Plugin URI: https://github.com/bassjobsen/wp-defer-loading
 Description: Defer loading javascript for WordPress. Without any additional library. Just the way Google ask you to do it.
-Version: 1.0
+Version: 1.0.1
 Author: Bass Jobsen
 Author URI: http://bassjobsen.weblogs.fm/
 License: GPLv2
