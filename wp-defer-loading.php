@@ -3,7 +3,7 @@
 Plugin Name: WP Defer Loading
 Plugin URI: https://github.com/bassjobsen/wp-defer-loading
 Description: Defer loading javascript for WordPress. Without any additional library. Just the way Google ask you to do it.
-Version: 1.0.1
+Version: 1.0.2
 Author: Bass Jobsen
 Author URI: http://bassjobsen.weblogs.fm/
 License: GPLv2
@@ -125,127 +125,125 @@ $thescriptsnd = array();
 if(!class_exists('WP_Defer_Loading')) 
 { 
 	
-class WP_Defer_Loading 
-{ 
-/*
-* Construct the plugin object 
-*/ 
-public function __construct() 
-{ 
-	add_filter( 'init', array( $this, 'init' ) );
-} 
-// END public 
+	class WP_Defer_Loading 
+	{ 
+	/*
+	* Construct the plugin object 
+	*/ 
+	public function __construct() 
+	{ 
+		add_filter( 'init', array( $this, 'init' ) );
+	} 
+	// END public 
 
-/** 
- * Activate the plugin 
-**/ 
-public static function activate() 
-{ 
-	// Do nothing 
-} 
-// END public static function activate 
+	/** 
+	 * Activate the plugin 
+	**/ 
+	public static function activate() 
+	{ 
+		// Do nothing 
+	} 
+	// END public static function activate 
 
-/** 
- * Deactivate the plugin 
- * 
-**/ 
-public static function deactivate() 
+	/** 
+	 * Deactivate the plugin 
+	 * 
+	**/ 
+	public static function deactivate() 
 
-{ // Do nothing 
-} 
-// END public static function deactivate 
+	{ // Do nothing 
+	} 
+	// END public static function deactivate 
 
-/** 
- * hook into WP's admin_init action hook 
- * */ 
- 
+	/** 
+	 * hook into WP's admin_init action hook 
+	 * */ 
+	 
 
-function init()
-{
-
-	remove_action( 'wp_head','wp_print_head_scripts',9);
-	remove_action( 'wp_footer','wp_print_footer_scripts',20);
-	add_action('wp_head', 'defer_loading_code',99);
-	add_action( 'defer_loading_scripts','wp_print_head_scripts',1);
-
-    if ( in_array( 'buddypress/bp-loader.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) 
+	function init()
 	{
-		remove_action( 'wp_head',    'bp_core_confirmation_js', 100 );
-	}
 
-    
-	function adddom ($handle,$src)
-	{
-		global $thescripts;
-		
-		echo "var element".$handle." = document.createElement(\"script\");\n";
-		
-		if(!empty($thescripts[$handle]))
+		remove_action( 'wp_head','wp_print_head_scripts',9);
+		remove_action( 'wp_footer','wp_print_footer_scripts',20);
+		add_action('wp_head', array( $this, 'defer_loading_code'),99);
+		add_action( 'defer_loading_scripts','wp_print_head_scripts',1);
+
+		if ( in_array( 'buddypress/bp-loader.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) 
 		{
-			echo "\n\nfunction helper".$handle."(){\n";
+			remove_action( 'wp_head',    'bp_core_confirmation_js', 100 );
+		}
+	}
+		
+		function adddom ($handle,$src)
+		{
+			global $thescripts;
 			
-			foreach($thescripts[$handle] as $handle2=>$src2)
+			echo "var element".$handle." = document.createElement(\"script\");\n";
+			
+			if(!empty($thescripts[$handle]))
 			{
-			adddom($handle2,$src2);
-			}
-			echo "}\n";
-			
-			echo "element".$handle.".onreadystatechange = function () {\n";
-            echo "if (this.readyState == 'complete') helper".$handle."();\n";
-            echo "}\n";
-            echo "element".$handle.".onload = helper".$handle.";\n\n\n";
-			
+				echo "\n\nfunction helper".$handle."(){\n";
+				
+				foreach($thescripts[$handle] as $handle2=>$src2)
+				{
+				$this->adddom($handle2,$src2);
+				}
+				echo "}\n";
+				
+				echo "element".$handle.".onreadystatechange = function () {\n";
+				echo "if (this.readyState == 'complete') helper".$handle."();\n";
+				echo "}\n";
+				echo "element".$handle.".onload = helper".$handle.";\n\n\n";
+				
+			}	
+
+			echo "element".$handle.".src = \"".$src."\";\n";
+			echo "document.body.appendChild(element".$handle.");\n";
+		
 		}	
+		
+		function defer_loading_code()
+		{
+			//
+			//https://github.com/requirejs/example-jquery-cdn
+			?>
+				 <script type="text/javascript">
 
-		echo "element".$handle.".src = \"".$src."\";\n";
-		echo "document.body.appendChild(element".$handle.");\n";
-	
+				 // Add a script element as a child of the body
+				 function downloadJSAtOnload() {
+				 <?php 
+				 do_action('defer_loading_scripts'); 
+
+				 global $thescriptsnd,$thescripts;
+				 
+				 foreach ($thescriptsnd as $handle=>$src)
+				 { 
+					  $this->adddom($handle,$src);
+				 }	 
+				
+				 
+				 ?>
+				 }
+
+				 // Check for browser support of event handling capability
+				 if (window.addEventListener)
+				 window.addEventListener("load", downloadJSAtOnload, false);
+				 else if (window.attachEvent)
+				 window.attachEvent("onload", downloadJSAtOnload);
+				 else window.onload = downloadJSAtOnload;
+
+				</script>	
+				<?php
+		}	
+		
+	}
 	}	
-	
-	function defer_loading_code()
-	{
-		//
-     	//https://github.com/requirejs/example-jquery-cdn
-		?>
-			 <script type="text/javascript">
-
-			 // Add a script element as a child of the body
-			 function downloadJSAtOnload() {
-			 <?php 
-			 do_action('defer_loading_scripts'); 
-
-			 global $thescriptsnd,$thescripts;
-			 
-			 foreach ($thescriptsnd as $handle=>$src)
-			 { 
-				  adddom($handle,$src);
-			 }	 
-			
-			 
-			 ?>
-			 }
-
-			 // Check for browser support of event handling capability
-			 if (window.addEventListener)
-			 window.addEventListener("load", downloadJSAtOnload, false);
-			 else if (window.attachEvent)
-			 window.attachEvent("onload", downloadJSAtOnload);
-			 else window.onload = downloadJSAtOnload;
-
-			</script>	
-		<?
-	}	
-	
 }
-}	
-}
-}
+
 if(class_exists('WP_Defer_Loading')) 
 { // Installation and uninstallation hooks 
 	register_activation_hook(__FILE__, array('WP_Defer_Loading', 'activate')); 
 	register_deactivation_hook(__FILE__, array('WP_Defer_Loading', 'deactivate')); 
 	
 	$wpdeferloading = new WP_Defer_Loading();
-	
-	
 }
