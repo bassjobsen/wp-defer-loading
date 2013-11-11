@@ -15,6 +15,9 @@ Requirements
 ------------
 * [Wordpress](http://wordpress.org/download/) tested with >= 3.6
 
+This plugin requires scripts are enqueued proper. Also read [WordPress Development: Properly load your Javascript and set dependency](http://bassjobsen.weblogs.fm/wordpress-development-properly-load-javascript-set-dependency/).
+
+
 Support
 -------
 
