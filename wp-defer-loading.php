@@ -32,8 +32,15 @@ class WP_Scripts2 extends WP_Scripts
 		function do_item( $handle, $group = false ) {
 		if ( !WP_Dependencies::do_item($handle) )
 			return false;
-   
-   
+		global $thescripts, $thescriptsnd, $fromsource;	
+		if($handle=='facebook-jssdk')
+		{
+		ob_start();	
+		parent::do_item($handle);
+		$fromsource = ob_get_contents();
+		ob_end_clean();
+		return true;
+	    }
       
 		/*if ( 0 === $group && $this->groups[$handle] > 0 ) {
 			$this->in_footer[] = $handle;
@@ -75,18 +82,25 @@ class WP_Scripts2 extends WP_Scripts
 
 		if ( !empty($ver) )
 			$src = add_query_arg('ver', $ver, $src);
-
+		ob_start();
 		$src = esc_url( apply_filters( 'script_loader_src', $src, $handle ) );
-		global $thescripts, $thescriptsnd;
+		
+		
+		
+		
+		$fromsource = ob_get_contents();
+		ob_end_clean();
 		
 		if ( $this->do_concat )
+		{
 			$this->print_html .= "<script type='text/javascript' src='$src'></script>\n";
-		else
+		}
+		elseif(!empty($src))
 		{
 						
 			if($handle=="jquery-migrate") $this->registered[$handle]->deps[] = "jquery";
 			if($handle=="bp-legacy-js") $this->registered[$handle]->src = plugins_url( 'buddypress/buddypress.js' , __FILE__ );
-			
+		
 			if(count($this->registered[$handle]->deps)===0)$thescriptsnd[($handle=="jquery-core")?'jquery':str_replace('-','_',$handle)]=$src;
 			else $thescripts[$this->registered[$handle]->deps[count($this->registered[$handle]->deps)-1]][str_replace('-','_',$handle)]=$src;
 		
@@ -116,6 +130,8 @@ if($page)
 {
 
 global $wp_scripts;
+$fromsource = '';
+
 $wp_scripts = new WP_Scripts2();
 
 $thescripts = array();
@@ -165,7 +181,7 @@ if(!class_exists('WP_Defer_Loading'))
 
 		remove_action( 'wp_head','wp_print_head_scripts',9);
 		remove_action( 'wp_footer','wp_print_footer_scripts',20);
-		add_action('wp_head', array( $this, 'defer_loading_code'),99);
+		add_action('wp_footer', array( $this, 'defer_loading_code'),20);
 		add_action( 'defer_loading_scripts','wp_print_head_scripts',1);
 
 		if ( in_array( 'buddypress/bp-loader.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) 
@@ -177,11 +193,13 @@ if(!class_exists('WP_Defer_Loading'))
 		function adddom ($handle,$src)
 		{
 			global $thescripts;
+			if(empty($src))return;
 			
 			echo "var element".$handle." = document.createElement(\"script\");\n";
 			
 			if(!empty($thescripts[$handle]))
 			{
+				
 				echo "\n\nfunction helper".$handle."(){\n";
 				
 				foreach($thescripts[$handle] as $handle2=>$src2)
@@ -199,11 +217,14 @@ if(!class_exists('WP_Defer_Loading'))
 
 			echo "element".$handle.".src = \"".$src."\";\n";
 			echo "document.body.appendChild(element".$handle.");\n";
-		
+			
+			
 		}	
 		
 		function defer_loading_code()
 		{
+	
+			
 			//
 			//https://github.com/requirejs/example-jquery-cdn
 			?>
@@ -218,6 +239,7 @@ if(!class_exists('WP_Defer_Loading'))
 				 
 				 foreach ($thescriptsnd as $handle=>$src)
 				 { 
+					  
 					  $this->adddom($handle,$src);
 				 }	 
 				
@@ -232,8 +254,11 @@ if(!class_exists('WP_Defer_Loading'))
 				 window.attachEvent("onload", downloadJSAtOnload);
 				 else window.onload = downloadJSAtOnload;
 
-				</script>	
+				</script>
 				<?php
+				global $fromsource;
+				echo '<script type="text/javascript">'.str_replace(array('<script type="text/javascript">','</script>'),array(),$fromsource).'</script>';
+				
 		}	
 		
 	}
