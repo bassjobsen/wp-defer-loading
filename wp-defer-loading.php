@@ -120,7 +120,7 @@ class WP_Scripts2 extends WP_Scripts
 
 		echo "var element = document.createElement(\"script\");\n";
         echo "element.appendChild( document.createTextNode( \"". addslashes(str_replace(array('\r\n','\n','\r'),"",$output)) ."\" ) );";
-		echo "document.body.appendChild(element);\n";
+		echo "\ndocument.body.appendChild(element);\n";
 
 		return true;
 	}
@@ -197,7 +197,7 @@ if(!class_exists('WP_Defer_Loading'))
 			global $thescripts;
 			if(!empty($src))
 			{
-			$handlejs=str_replace('-','',$handle);	
+			$handlejs=str_replace(array('-','.'),'',$handle);	
 			echo "var element".$handlejs." = document.createElement(\"script\");\n";
 			
 			if(!empty($thescripts[$handle]))
