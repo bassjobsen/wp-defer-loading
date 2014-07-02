@@ -99,12 +99,10 @@ class WP_Scripts2 extends WP_Scripts
 		{
 			
 			if($handle=="jquery-migrate") $this->registered[$handle]->deps[] = "jquery";
-			if($handle=="masonry") $this->registered[$handle]->deps[] = "jquery";
-			if($handle=="jquery-masonry") $this->registered[$handle]->deps[] = "masonry";
 			if($handle=="bp-legacy-js") $src = plugins_url( 'buddypress/buddypress.js' , __FILE__ );
 		
-			if(count($this->registered[$handle]->deps)===0)$thescriptsnd[($handle=="jquery-core")?'jquery':$handle]=$src;
-			else $thescripts[$this->registered[$handle]->deps[count($this->registered[$handle]->deps)-1]][$handle]=$src;
+			if(count($this->registered[$handle]->deps)===0)$thescriptsnd[($handle=="jquery-core")?'jquery':str_replace('-','_',$handle)]=$src;
+			else $thescripts[$this->registered[$handle]->deps[count($this->registered[$handle]->deps)-1]][str_replace('-','_',$handle)]=$src;
 		
         } 
 		return true;
@@ -119,7 +117,7 @@ class WP_Scripts2 extends WP_Scripts
 
 
 		echo "var element = document.createElement(\"script\");\n";
-        echo "element.appendChild( document.createTextNode( \"". addslashes(str_replace(array('\r\n','\n','\r'),"",$output)) ."\" ) );";
+        echo "element.appendChild( document.createTextNode( \"". addslashes(str_replace("\n","",$output)) ."\" ) );";
 		echo "document.body.appendChild(element);\n";
 
 		return true;
@@ -195,15 +193,14 @@ if(!class_exists('WP_Defer_Loading'))
 		function adddom ($handle,$src)
 		{
 			global $thescripts;
-			if(!empty($src))
-			{
-			$handlejs=str_replace('-','',$handle);	
-			echo "var element".$handlejs." = document.createElement(\"script\");\n";
+			if(empty($src))return;
+			
+			echo "var element".$handle." = document.createElement(\"script\");\n";
 			
 			if(!empty($thescripts[$handle]))
 			{
 				
-				echo "\n\nfunction helper".$handlejs."(){\n";
+				echo "\n\nfunction helper".$handle."(){\n";
 				
 				foreach($thescripts[$handle] as $handle2=>$src2)
 				{
@@ -211,17 +208,17 @@ if(!class_exists('WP_Defer_Loading'))
 				}
 				echo "}\n";
 				
-				echo "element".$handlejs.".onreadystatechange = function () {\n";
-				echo "if (this.readyState == 'complete') helper".$handlejs."();\n";
+				echo "element".$handle.".onreadystatechange = function () {\n";
+				echo "if (this.readyState == 'complete') helper".$handle."();\n";
 				echo "}\n";
-				echo "element".$handlejs.".onload = helper".$handlejs.";\n\n\n";
+				echo "element".$handle.".onload = helper".$handle.";\n\n\n";
 				
 			}	
 
-			echo "element".$handlejs.".src = \"".$src."\";\n";
-			echo "document.body.appendChild(element".$handlejs.");\n";
+			echo "element".$handle.".src = \"".$src."\";\n";
+			echo "document.body.appendChild(element".$handle.");\n";
 			
-			}
+			
 		}	
 		
 		function defer_loading_code()
@@ -239,7 +236,7 @@ if(!class_exists('WP_Defer_Loading'))
 				 do_action('defer_loading_scripts'); 
 
 				 global $thescriptsnd,$thescripts;
-
+				 
 				 foreach ($thescriptsnd as $handle=>$src)
 				 { 
 					  

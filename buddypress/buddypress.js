@@ -10,6 +10,7 @@ jQuery.cookie=function(name,value,options){if(typeof value!='undefined'){options
 /* jQuery querystring plugin */
 eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--){d[e(c)]=k[c]||e(c)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('M 6(A){4 $11=A.11||\'&\';4 $V=A.V===r?r:j;4 $1p=A.1p===r?\'\':\'[]\';4 $13=A.13===r?r:j;4 $D=$13?A.D===j?"#":"?":"";4 $15=A.15===r?r:j;v.1o=M 6(){4 f=6(o,t){8 o!=1v&&o!==x&&(!!t?o.1t==t:j)};4 14=6(1m){4 m,1l=/\\[([^[]*)\\]/g,T=/^([^[]+)(\\[.*\\])?$/.1r(1m),k=T[1],e=[];19(m=1l.1r(T[2]))e.u(m[1]);8[k,e]};4 w=6(3,e,7){4 o,y=e.1b();b(I 3!=\'X\')3=x;b(y===""){b(!3)3=[];b(f(3,L)){3.u(e.h==0?7:w(x,e.z(0),7))}n b(f(3,1a)){4 i=0;19(3[i++]!=x);3[--i]=e.h==0?7:w(3[i],e.z(0),7)}n{3=[];3.u(e.h==0?7:w(x,e.z(0),7))}}n b(y&&y.T(/^\\s*[0-9]+\\s*$/)){4 H=1c(y,10);b(!3)3=[];3[H]=e.h==0?7:w(3[H],e.z(0),7)}n b(y){4 H=y.B(/^\\s*|\\s*$/g,"");b(!3)3={};b(f(3,L)){4 18={};1w(4 i=0;i<3.h;++i){18[i]=3[i]}3=18}3[H]=e.h==0?7:w(3[H],e.z(0),7)}n{8 7}8 3};4 C=6(a){4 p=d;p.l={};b(a.C){v.J(a.Z(),6(5,c){p.O(5,c)})}n{v.J(1u,6(){4 q=""+d;q=q.B(/^[?#]/,\'\');q=q.B(/[;&]$/,\'\');b($V)q=q.B(/[+]/g,\' \');v.J(q.Y(/[&;]/),6(){4 5=1e(d.Y(\'=\')[0]||"");4 c=1e(d.Y(\'=\')[1]||"");b(!5)8;b($15){b(/^[+-]?[0-9]+\\.[0-9]*$/.1d(c))c=1A(c);n b(/^[+-]?[0-9]+$/.1d(c))c=1c(c,10)}c=(!c&&c!==0)?j:c;b(c!==r&&c!==j&&I c!=\'1g\')c=c;p.O(5,c)})})}8 p};C.1H={C:j,1G:6(5,1f){4 7=d.Z(5);8 f(7,1f)},1h:6(5){b(!f(5))8 d.l;4 K=14(5),k=K[0],e=K[1];4 3=d.l[k];19(3!=x&&e.h!=0){3=3[e.1b()]}8 I 3==\'1g\'?3:3||""},Z:6(5){4 3=d.1h(5);b(f(3,1a))8 v.1E(j,{},3);n b(f(3,L))8 3.z(0);8 3},O:6(5,c){4 7=!f(c)?x:c;4 K=14(5),k=K[0],e=K[1];4 3=d.l[k];d.l[k]=w(3,e.z(0),7);8 d},w:6(5,c){8 d.N().O(5,c)},1s:6(5){8 d.O(5,x).17()},1z:6(5){8 d.N().1s(5)},1j:6(){4 p=d;v.J(p.l,6(5,7){1y p.l[5]});8 p},1F:6(Q){4 D=Q.B(/^.*?[#](.+?)(?:\\?.+)?$/,"$1");4 S=Q.B(/^.*?[?](.+?)(?:#.+)?$/,"$1");8 M C(Q.h==S.h?\'\':S,Q.h==D.h?\'\':D)},1x:6(){8 d.N().1j()},N:6(){8 M C(d)},17:6(){6 F(G){4 R=I G=="X"?f(G,L)?[]:{}:G;b(I G==\'X\'){6 1k(o,5,7){b(f(o,L))o.u(7);n o[5]=7}v.J(G,6(5,7){b(!f(7))8 j;1k(R,5,F(7))})}8 R}d.l=F(d.l);8 d},1B:6(){8 d.N().17()},1D:6(){4 i=0,U=[],W=[],p=d;4 16=6(E){E=E+"";b($V)E=E.B(/ /g,"+");8 1C(E)};4 1n=6(1i,5,7){b(!f(7)||7===r)8;4 o=[16(5)];b(7!==j){o.u("=");o.u(16(7))}1i.u(o.P(""))};4 F=6(R,k){4 12=6(5){8!k||k==""?[5].P(""):[k,"[",5,"]"].P("")};v.J(R,6(5,7){b(I 7==\'X\')F(7,12(5));n 1n(W,12(5),7)})};F(d.l);b(W.h>0)U.u($D);U.u(W.P($11));8 U.P("")}};8 M C(1q.S,1q.D)}}(v.1o||{});',62,106,'|||target|var|key|function|value|return|||if|val|this|tokens|is||length||true|base|keys||else||self||false|||push|jQuery|set|null|token|slice|settings|replace|queryObject|hash|str|build|orig|index|typeof|each|parsed|Array|new|copy|SET|join|url|obj|search|match|queryString|spaces|chunks|object|split|get||separator|newKey|prefix|parse|numbers|encode|COMPACT|temp|while|Object|shift|parseInt|test|decodeURIComponent|type|number|GET|arr|EMPTY|add|rx|path|addFields|query|suffix|location|exec|REMOVE|constructor|arguments|undefined|for|empty|delete|remove|parseFloat|compact|encodeURIComponent|toString|extend|load|has|prototype'.split('|'),0,{}))
 
+
 // AJAX Functions
 var jq = jQuery;
 
@@ -366,7 +367,7 @@ jq(document).ready( function() {
 	});
 
 	// Activity "Read More" links
-	jq('.activity-read-more a').on('click', function(event) {
+	jq('div.activity').on('click', '.activity-read-more a', function(event) {
 		var target = jq(event.target);
 		var link_id = target.parent().attr('id').split('-');
 		var a_id = link_id[3];
@@ -761,6 +762,7 @@ jq(document).ready( function() {
 			var css_id = el.attr('id').split( '-' );
 			var object = css_id[0];
 			var search_terms = false;
+			var pagination_id = jq(target).closest('.pagination-links').attr('id');
 
 			if ( jq('div.dir-search input').length )
 				search_terms = jq('.dir-search input').val();
@@ -771,8 +773,14 @@ jq(document).ready( function() {
 				var page_number = Number( jq('.pagination span.current').html() ) - 1;
 			else
 				var page_number = Number( jq(target).html() );
+			
+			if ( pagination_id.indexOf( 'pag-bottom' ) !== -1 ) {
+				var caller = 'pag-bottom';
+			} else {
+				var caller = null;
+			}
 
-			bp_filter_request( object, jq.cookie('bp-' + object + '-filter'), jq.cookie('bp-' + object + '-scope'), 'div.' + object, search_terms, page_number, jq.cookie('bp-' + object + '-extras') );
+			bp_filter_request( object, jq.cookie('bp-' + object + '-filter'), jq.cookie('bp-' + object + '-scope'), 'div.' + object, search_terms, page_number, jq.cookie('bp-' + object + '-extras'), caller );
 
 			return false;
 		}
@@ -1021,6 +1029,13 @@ jq(document).ready( function() {
 
 	/** Group Join / Leave Buttons **************************************/
 
+	// Confirmation when clicking Leave Group in group headers
+	jq('#buddypress').on('click', '.group-button .leave-group', function() {
+		if ( false == confirm( BP_DTheme.leave_group_confirm ) ) {
+			return false;
+		}
+	});
+
 	jq('#groups-dir-list').on('click', '.group-button a', function() {
 		var gid = jq(this).parent().attr('id');
 		gid = gid.split('-');
@@ -1033,6 +1048,12 @@ jq(document).ready( function() {
 
 		var thelink = jq(this);
 
+		// Leave Group confirmation within directories - must intercept
+		// AJAX request
+		if ( thelink.hasClass( 'leave-group' ) && false == confirm( BP_DTheme.leave_group_confirm ) ) {
+			return false;
+		}
+
 		jq.post( ajaxurl, {
 			action: 'joinleave_group',
 			'cookie': bp_get_cookies(),
@@ -1043,14 +1064,41 @@ jq(document).ready( function() {
 		{
 			var parentdiv = thelink.parent();
 
-			if ( !jq('body.directory').length )
+			// user groups page
+			if ( ! jq('body.directory').length ) {
 				location.href = location.href;
-			else {
+
+			// groups directory
+			} else {
 				jq(parentdiv).fadeOut(200,
 					function() {
 						parentdiv.fadeIn(200).html(response);
+
+						var mygroups = jq('#groups-personal span');
+						var add      = 1;
+
+						if( thelink.hasClass( 'leave-group' ) ) {
+							// hidden groups slide up
+							if ( parentdiv.hasClass( 'hidden' ) ) {
+								parentdiv.closest('li').slideUp( 200 );
+							}
+
+							add = 0;
+						} else if ( thelink.hasClass( 'request-membership' ) ) {
+							add = false;
+						}
+
+						// change the "My Groups" value
+						if ( mygroups.length && add !== false ) {
+							if ( add ) {
+								mygroups.text( ( mygroups.text() >> 0 ) + 1 );
+							} else {
+								mygroups.text( ( mygroups.text() >> 0 ) - 1 );
+							}
+						}
+
 					}
-					);
+				);
 			}
 		});
 		return false;
@@ -1176,36 +1224,38 @@ jq(document).ready( function() {
 	});
 
 	/* Selecting unread and read messages in inbox */
-	jq("#message-type-select").change(
-		function() {
-			var selection = jq("#message-type-select").val();
-			var checkboxes = jq("td input[type='checkbox']");
-			checkboxes.each( function(i) {
-				checkboxes[i].checked = "";
-			});
+	jq( 'body.messages #item-body div.messages' ).on( 'change', '#message-type-select', function() {
+		var selection = this.value;
+		var checkboxes = jq( "td input[type='checkbox']" );
 
-			switch(selection) {
-				case 'unread':
-					var checkboxes = jq("tr.unread td input[type='checkbox']");
-					break;
-				case 'read':
-					var checkboxes = jq("tr.read td input[type='checkbox']");
-					break;
-			}
-			if ( selection != '' ) {
-				checkboxes.each( function(i) {
-					checkboxes[i].checked = "checked";
-				});
-			} else {
-				checkboxes.each( function(i) {
-					checkboxes[i].checked = "";
-				});
-			}
+		checkboxes.each( function(i) {
+			checkboxes[i].checked = "";
+		});
+
+		var checked_value = "checked";
+		switch ( selection ) {
+			case 'unread' :
+				checkboxes = jq("tr.unread td input[type='checkbox']");
+				break;
+			case 'read' :
+				checkboxes = jq("tr.read td input[type='checkbox']");
+				break;
+			case '' :
+				checked_value = "";
+				break;
 		}
-	);
 
+		checkboxes.each( function(i) {
+			checkboxes[i].checked = checked_value;
+		});
+	});
+	
 	/* Bulk delete messages */
-	jq("#delete_inbox_messages, #delete_sentbox_messages").on( 'click', function() {
+	jq( 'body.messages #item-body div.messages' ).on( 'click', '.messages-options-nav a', function() {
+		if ( -1 == jq.inArray( this.id ), Array( 'delete_sentbox_messages', 'delete_inbox_messages' ) ) {
+			return;
+		}
+		
 		checkboxes_tosend = '';
 		checkboxes = jq("#message-threads tr td input[type='checkbox']");
 
@@ -1221,7 +1271,7 @@ jq(document).ready( function() {
 			jq(this).removeClass('loading');
 			return false;
 		}
-
+		
 		jq.post( ajaxurl, {
 			action: 'messages_delete',
 			'thread_ids': checkboxes_tosend
@@ -1232,14 +1282,19 @@ jq(document).ready( function() {
 				jq('#message-threads').before( '<div id="message" class="updated"><p>' + response + '</p></div>' );
 
 				jq(checkboxes).each( function(i) {
-					if( jq(this).is(':checked') )
+					if( jq(this).is(':checked') ) {
+						// We need to uncheck because message is only hidden
+						// Otherwise, AJAX will be fired again with same data 
+						jq(this).attr( 'checked', false );
 						jq(this).parent().parent().fadeOut(150);
+					}
 				});
 			}
 
 			jq('#message').hide().slideDown(150);
 			jq("#delete_inbox_messages, #delete_sentbox_messages").removeClass('loading');
 		});
+
 		return false;
 	});
 
@@ -1341,7 +1396,7 @@ function bp_init_objects(objects) {
 }
 
 /* Filter the current content list (groups/members/blogs/topics) */
-function bp_filter_request( object, filter, scope, target, search_terms, page, extras ) {
+function bp_filter_request( object, filter, scope, target, search_terms, page, extras, caller ) {
 	if ( 'activity' == object )
 		return false;
 
@@ -1388,10 +1443,23 @@ function bp_filter_request( object, filter, scope, target, search_terms, page, e
 	},
 	function(response)
 	{
-		jq(target).fadeOut( 100, function() {
-			jq(this).html(response);
-			jq(this).fadeIn(100);
-		});
+		/* animate to top if called from bottom pagination */
+		if ( caller == 'pag-bottom' && jq('#subnav').length ) {
+			var top = jq('#subnav').parent();
+			jq('html,body').animate({scrollTop: top.offset().top}, 'slow', function() {
+				jq(target).fadeOut( 100, function() {
+					jq(this).html(response);
+					jq(this).fadeIn(100);
+			 	});
+			});	
+
+		} else {
+			jq(target).fadeOut( 100, function() {
+				jq(this).html(response);
+				jq(this).fadeIn(100);
+		 	});
+		}
+
 		jq('.item-list-tabs li.selected').removeClass('loading');
 	});
 }
@@ -1532,7 +1600,7 @@ function bp_get_cookies() {
 	for (var i = 0; i < allCookies.length; i++) {
 		var cookie    = allCookies[i];
 		var delimiter = cookie.indexOf("=");
-		var name      = unescape( cookie.slice(0, delimiter) ).trim();
+		var name      = jq.trim( unescape( cookie.slice(0, delimiter) ) );
 		var value     = unescape( cookie.slice(delimiter + 1) );
 
 		// if BP cookie, store it
@@ -1544,4 +1612,3 @@ function bp_get_cookies() {
 	// returns BP cookies as querystring
 	return encodeURIComponent( jq.param(bpCookies) );
 }
-
