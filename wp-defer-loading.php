@@ -119,7 +119,7 @@ class WP_Scripts2 extends WP_Scripts
 
 
 		echo "var element = document.createElement(\"script\");\n";
-        echo "element.appendChild( document.createTextNode( \"". addslashes(str_replace(array('\r\n','\n','\r'),"",$output)) ."\" ) );";
+        echo "element.text( \"". addslashes(str_replace(array('\r\n','\n','\r'),"",$output)) ."\" );";
 		echo "\ndocument.body.appendChild(element);\n";
 
 		return true;
