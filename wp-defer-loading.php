@@ -119,7 +119,10 @@ class WP_Scripts2 extends WP_Scripts
 
 
 		echo "var element = document.createElement(\"script\");\n";
-        echo "element.text( \"". addslashes(str_replace(array('\r\n','\n','\r'),"",$output)) ."\" );";
+	// <script> elements in IE8 do not support the .appendChild() method
+	// so, we're assigning the string to the .text property
+	//echo "element.appendChild( document.createTextNode( \"". addslashes(str_replace(array('\r\n','\n','\r'),"",$output)) ."\" ) );";
+	echo "element.text = '". addslashes(str_replace(array('\r\n','\n','\r'),"",$output)) ."' ;";
 		echo "\ndocument.body.appendChild(element);\n";
 
 		return true;
